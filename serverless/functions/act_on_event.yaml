@@ -1,0 +1,4 @@
+handler: event.handler.act_on_event
+timeout: 900
+layers:
+  - ${ssm:/dataplatform/python-base-lambda-layer/arn}
