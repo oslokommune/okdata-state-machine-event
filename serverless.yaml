@@ -1,0 +1,63 @@
+frameworkVersion: ">=1.50.0 <2.0.0"
+service: state-machine-event
+
+provider:
+  name: aws
+  runtime: python3.7
+  memorySize: 1024
+  region: ${opt:region, 'eu-west-1'}
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket:
+    name: ${self:custom.deploymentBucket.${self:provider.stage}, self:custom.deploymentBucket.dev}
+    serverSideEncryption: AES256
+  deploymentPrefix: deploy
+  tags:
+    GIT_REV: ${git:branch}:${git:sha1}
+    VERSION: ${self:custom.version}
+  environment:
+    GIT_REV: ${git:branch}:${git:sha1}
+    STAGE: ${self:provider.stage}
+    VERSION: ${self:custom.version}
+    API_GATEWAY_URL: ${ssm:/dataplatform/shared/api-gateway-url}
+    KEYCLOAK_SERVER: ${ssm:/dataplatform/shared/keycloak-server-url}
+    KEYCLOAK_REALM: ${ssm:/dataplatform/shared/keycloak-realm}
+    CLIENT_ID: state-machine-event
+    CLIENT_SECRET: ${ssm:/dataplatform/state-machine-event/keycloak-client-secret~true}
+    AUTHORIZER_API: ${ssm:/dataplatform/simple-dataset-authorizer/url}
+    STATUS_API: ${ssm:/dataplatform/shared/status-api-url}
+    SERVICE_NAME: ${self:service.name}
+package:
+  exclude:
+    - '**/*'
+  include:
+    - event/*.py
+
+
+functions:
+  act_on_event: ${file(serverless/functions/act_on_event.yaml)}
+
+plugins:
+  - serverless-python-requirements
+  - serverless-plugin-git-variables
+  - serverless-pseudo-parameters
+  - serverless-es-logs
+
+resources:
+  Description: |
+    ${self:service} ${git:branch}:${git:sha1}
+    ${git:message}
+
+custom:
+  version: 0.1.0
+  pythonRequirements:
+    dockerizePip: non-linux
+    slim: true
+    usePoetry: false
+  esLogs:
+    endpoint: ${ssm:/dataplatform/elasticsearch/endpoint}
+    index: dataplatform-services
+    filterPattern: '{ $.function_name = "*" }'
+  exportGitVariables: false
+  deploymentBucket:
+    prod: ok-origo-dataplatform-config-prod
+    dev: ok-origo-dataplatform-config-dev
