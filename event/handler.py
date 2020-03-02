@@ -3,7 +3,7 @@ from dataplatform.awslambda.logging import logging_wrapper, log_add
 from dataplatform.status import Status, STATUS_OK, STATUS_FAILED, STATUS_FINISHED
 
 
-@logging_wrapper("lambda-boilerplate")
+@logging_wrapper("state-machine-event")
 def act_on_event(event, context):
     details = event.get("detail", None)
     if not details:

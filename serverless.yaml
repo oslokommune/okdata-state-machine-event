@@ -24,7 +24,7 @@ provider:
     CLIENT_ID: state-machine-event
     CLIENT_SECRET: ${ssm:/dataplatform/state-machine-event/keycloak-client-secret~true}
     AUTHORIZER_API: ${ssm:/dataplatform/simple-dataset-authorizer/url}
-    STATUS_API: ${ssm:/dataplatform/status-api/url}
+    STATUS_API: ${ssm:/dataplatform/shared/status-api-url}
     SERVICE_NAME: ${self:service.name}
 package:
   exclude:
