@@ -1,4 +1,4 @@
-frameworkVersion: ">=1.50.0 <2.0.0"
+frameworkVersion: ">=1.64.0 <2.0.0"
 service: state-machine-event
 
 provider:
@@ -11,6 +11,7 @@ provider:
     name: ${self:custom.deploymentBucket.${self:provider.stage}, self:custom.deploymentBucket.dev}
     serverSideEncryption: AES256
   deploymentPrefix: deploy
+  rolePermissionsBoundary: "arn:aws:iam::#{AWS::AccountId}:policy/oslokommune/oslokommune-boundary"
   tags:
     GIT_REV: ${git:branch}:${git:sha1}
     VERSION: ${self:custom.version}
