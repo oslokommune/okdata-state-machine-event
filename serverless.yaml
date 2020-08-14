@@ -24,7 +24,7 @@ provider:
     KEYCLOAK_REALM: ${ssm:/dataplatform/shared/keycloak-realm}
     CLIENT_ID: state-machine-event
     CLIENT_SECRET: ${ssm:/dataplatform/state-machine-event/keycloak-client-secret~true}
-    AUTHORIZER_API: ${ssm:/dataplatform/simple-dataset-authorizer/url}
+    AUTHORIZER_API: ${ssm:/dataplatform/shared/api-gateway-url}/simple-dataset-authorizer
     STATUS_API: ${ssm:/dataplatform/shared/status-api-url}
     SERVICE_NAME: ${self:service.name}
 package:
@@ -55,7 +55,7 @@ custom:
     slim: true
     usePoetry: false
   esLogs:
-    endpoint: ${ssm:/dataplatform/elasticsearch/endpoint}
+    endpoint: ${ssm:/dataplatform/shared/logs-elasticsearch-endpoint}
     index: dataplatform-services
     filterPattern: '{ $.function_name = "*" }'
   exportGitVariables: false
