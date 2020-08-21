@@ -21,7 +21,7 @@ provider:
     VERSION: ${self:custom.version}
     API_GATEWAY_URL: ${ssm:/dataplatform/shared/api-gateway-url}
     KEYCLOAK_SERVER: ${ssm:/dataplatform/shared/keycloak-server-url}
-    KEYCLOAK_REALM: ${ssm:/dataplatform/shared/keycloak-realm}
+    KEYCLOAK_REALM: api-catalog
     CLIENT_ID: state-machine-event
     CLIENT_SECRET: ${ssm:/dataplatform/state-machine-event/keycloak-client-secret~true}
     AUTHORIZER_API: ${ssm:/dataplatform/shared/api-gateway-url}/simple-dataset-authorizer
