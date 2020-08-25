@@ -25,7 +25,6 @@ provider:
     CLIENT_ID: state-machine-event
     CLIENT_SECRET: ${ssm:/dataplatform/state-machine-event/keycloak-client-secret~true}
     AUTHORIZER_API: ${ssm:/dataplatform/shared/api-gateway-url}/simple-dataset-authorizer
-    STATUS_API: ${self:custom.statusApiUrl.${self:provider.stage}}
     SERVICE_NAME: ${self:service.name}
 package:
   exclude:
@@ -62,6 +61,3 @@ custom:
   deploymentBucket:
     prod: ok-origo-dataplatform-config-prod
     dev: ok-origo-dataplatform-config-dev
-  statusApiUrl:
-    prod: ${ssm:/dataplatform/shared/api-gateway-url}/status-api
-    dev: ${ssm:/dataplatform/shared/api-gateway-url}/status-api/status/
