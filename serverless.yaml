@@ -19,7 +19,6 @@ provider:
     GIT_REV: ${git:branch}:${git:sha1}
     STAGE: ${self:provider.stage}
     VERSION: ${self:custom.version}
-    API_GATEWAY_URL: ${ssm:/dataplatform/shared/api-gateway-url}
     KEYCLOAK_SERVER: ${ssm:/dataplatform/shared/keycloak-server-url}
     KEYCLOAK_REALM: api-catalog
     CLIENT_ID: state-machine-event
