@@ -6,27 +6,27 @@
 #
 --extra-index-url https://artifacts.oslo.kommune.no/repository/itas-pypip/simple
 
-aws-xray-sdk==2.5.0       # via dataplatform-common-python
-botocore==1.16.9          # via aws-xray-sdk
-certifi==2020.4.5.1       # via requests
+aws-xray-sdk==2.6.0       # via dataplatform-common-python
+botocore==1.17.56         # via aws-xray-sdk
+certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
-dataplatform-common-python==0.2.11
+dataplatform-common-python==0.2.17
 docutils==0.15.2          # via botocore
-ecdsa==0.15               # via python-jose
+ecdsa==0.14.1             # via python-jose
 future==0.18.2            # via aws-xray-sdk
-idna==2.9                 # via requests
-importlib-metadata==1.6.0  # via jsonpickle
+idna==2.10                # via requests
+importlib-metadata==1.7.0  # via jsonpickle
 jmespath==0.10.0          # via botocore
 jsonpickle==1.4.1         # via aws-xray-sdk
 pyasn1==0.4.8             # via python-jose, rsa
 python-dateutil==2.8.1    # via botocore
-python-jose==3.1.0        # via python-keycloak
-python-keycloak==0.20.0   # via dataplatform-common-python
-requests==2.23.0          # via dataplatform-common-python, python-keycloak
-rsa==4.0                  # via python-jose
-simplejson==3.17.0        # via dataplatform-common-python
-six==1.14.0               # via ecdsa, python-dateutil, python-jose, structlog
+python-jose==3.2.0        # via python-keycloak
+python-keycloak==0.22.0   # via dataplatform-common-python
+requests==2.24.0          # via dataplatform-common-python, python-keycloak
+rsa==4.6                  # via python-jose
+simplejson==3.17.2        # via dataplatform-common-python
+six==1.15.0               # via ecdsa, python-dateutil, python-jose, structlog
 structlog==20.1.0         # via dataplatform-common-python
-urllib3==1.25.9           # via botocore, requests
+urllib3==1.25.10          # via botocore, requests
 wrapt==1.12.1             # via aws-xray-sdk
 zipp==3.1.0               # via importlib-metadata
