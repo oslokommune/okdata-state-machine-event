@@ -1,4 +1,4 @@
 handler: event.handler.act_on_event
 events:
-  - sns: arn:aws:sns:eu-west-1:#{AWS::AccountId}:state_machine_event
+  - sns: arn:aws:sns:${self:provider.region}:#{AWS::AccountId}:dataplatform_state_machine_event
 
