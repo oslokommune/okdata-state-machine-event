@@ -1,0 +1,4 @@
+handler: event.handler.act_on_queue
+events:
+  - sns: arn:aws:sns:${self:provider.region}:#{AWS::AccountId}:dataplatform_state_machine_event
+

@@ -1,10 +1,15 @@
 import json
+
 from dataplatform.awslambda.logging import logging_wrapper, log_add
 from dataplatform.status import Status, STATUS_OK, STATUS_FAILED, STATUS_FINISHED
 
 
 @logging_wrapper("state-machine-event")
 def act_on_event(event, context):
+    return True
+
+
+def handle_event(event):
     details = event.get("detail", None)
     if not details:
         return False
@@ -38,3 +43,20 @@ def act_on_event(event, context):
     log_add(status_payload=status.payload)
     body = {"message": "Acted on event"}
     return {"statusCode": 200, "headers": headers, "body": json.dumps(body)}
+
+
+@logging_wrapper("state-machine-event")
+def act_on_queue(event, context):
+    records = event.get("Records", None)
+    if not records:
+        raise ValueError("Event does not contain Records")
+    record = records[0]
+    source = record["EventSource"]
+    if source == "aws:sns":
+        sns = record["Sns"]
+        event = json.loads(sns["Message"])
+        return handle_event(event)
+    else:
+        raise ValueError(
+            f"Unsuported 'EventSource' {source}. Supported types: 'aws:sns'"
+        )

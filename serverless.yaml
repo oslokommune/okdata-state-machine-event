@@ -35,6 +35,7 @@ package:
 
 functions:
   act_on_event: ${file(serverless/functions/act_on_event.yaml)}
+  act_on_queue: ${file(serverless/functions/act_on_queue.yaml)}
 
 plugins:
   - serverless-python-requirements
