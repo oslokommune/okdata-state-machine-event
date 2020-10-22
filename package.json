@@ -2,7 +2,9 @@
   "name": "state-machine-event",
   "description": "",
   "version": "0.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "serverless": "^1.83.0"
+  },
   "devDependencies": {
     "serverless-es-logs": "^3.2.0",
     "serverless-plugin-git-variables": "^3.3.2",
