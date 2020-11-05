@@ -1,7 +1,8 @@
 import json
-
 import pytest
+
 from dataplatform.status import Status
+from dataplatform.status import TraceStatus, TraceEventStatus
 
 from event.handler import act_on_queue
 
@@ -42,9 +43,52 @@ class TestActOnQueue:
         )
         assert result is False
 
-    def test_send_event_with_correct_status(self, mocker):
+    def test_send_event_with_succeeded_status(self, mocker):
         mocker.patch.object(Status, "done", return_value={})
+        s = mocker.spy(Status, "add")
+
+        trace_id = "trace-id-abc123-1a2b3c"
         result = act_on_queue(
-            make_event({"detail": {"status": "SUCCEEDED"}}), empty_context
+            make_event({"detail": {"status": "SUCCEEDED", "name": trace_id}}),
+            empty_context,
         )
+
+        assert (
+            mocker.call(
+                mocker.ANY,
+                trace_id=trace_id,
+                domain="dataset",
+                operation="set_finished_status",
+                trace_event_status=TraceEventStatus.OK,
+                trace_status=TraceStatus.FINISHED,
+            )
+            in s.call_args_list
+        )
+
+        Status.done.assert_called_once()
+        assert result["statusCode"] == 200
+
+    def test_send_event_with_aborted_status(self, mocker):
+        mocker.patch.object(Status, "done", return_value={})
+        s = mocker.spy(Status, "add")
+
+        trace_id = "trace-id-abc123-1a2b3c"
+        result = act_on_queue(
+            make_event({"detail": {"status": "ABORTED", "name": trace_id}}),
+            empty_context,
+        )
+
+        assert (
+            mocker.call(
+                mocker.ANY,
+                trace_id=trace_id,
+                domain="dataset",
+                operation="set_finished_status",
+                trace_event_status=TraceEventStatus.FAILED,
+                trace_status=TraceStatus.FINISHED,
+            )
+            in s.call_args_list
+        )
+
+        Status.done.assert_called_once()
         assert result["statusCode"] == 200
