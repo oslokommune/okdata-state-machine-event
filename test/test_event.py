@@ -1,8 +1,8 @@
 import json
 import pytest
 
-from dataplatform.status import Status
-from dataplatform.status import TraceStatus, TraceEventStatus
+from okdata.aws.status import TraceStatus, TraceEventStatus
+from okdata.aws.status.sdk import Status
 
 from event.handler import act_on_queue
 
