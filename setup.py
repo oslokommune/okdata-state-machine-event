@@ -17,5 +17,5 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.oslo.kommune.no/origo-dataplatform/state-machine-event",
     packages=find_packages(),
-    install_requires=["dataplatform-common-python"],
+    install_requires=["okdata-aws"],
 )

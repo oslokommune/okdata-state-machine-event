@@ -1,8 +1,7 @@
 import json
 
-from dataplatform.awslambda.logging import logging_wrapper
-from dataplatform.status import TraceStatus, TraceEventStatus
-from dataplatform.awslambda.status import status_wrapper, status_add
+from okdata.aws.logging import logging_wrapper
+from okdata.aws.status import status_wrapper, status_add, TraceStatus, TraceEventStatus
 
 
 finished_statuses = {
