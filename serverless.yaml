@@ -21,8 +21,9 @@ provider:
     VERSION: ${self:custom.version}
     KEYCLOAK_SERVER: ${ssm:/dataplatform/shared/keycloak-server-url}
     KEYCLOAK_REALM: api-catalog
-    CLIENT_ID: state-machine-event
-    CLIENT_SECRET: ${ssm:/dataplatform/state-machine-event/keycloak-client-secret~true}
+    OKDATA_ENVIRONMENT: ${self:provider.stage}
+    OKDATA_CLIENT_ID: state-machine-event
+    OKDATA_CLIENT_SECRET: ${ssm:/dataplatform/state-machine-event/keycloak-client-secret~true}
     AUTHORIZER_API: ${ssm:/dataplatform/shared/api-gateway-url}/simple-dataset-authorizer
     SERVICE_NAME: ${self:service.name}
     STATUS_API_URL: ${ssm:/dataplatform/shared/api-gateway-url}/status-api
@@ -31,7 +32,6 @@ package:
     - '**/*'
   include:
     - event/*.py
-
 
 functions:
   act_on_event: ${file(serverless/functions/act_on_event.yaml)}
