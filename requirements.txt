@@ -16,9 +16,9 @@ idna==2.10
     # via requests
 jsonschema==3.2.0
     # via okdata-sdk
-okdata-aws==0.3.0
+okdata-aws==0.3.2
     # via state-machine-event (setup.py)
-okdata-sdk==0.6.0
+okdata-sdk==0.6.2
     # via okdata-aws
 prettytable==2.0.0
     # via okdata-sdk
@@ -51,7 +51,7 @@ six==1.15.0
     #   python-jose
 structlog==20.2.0
     # via okdata-aws
-urllib3==1.25.11
+urllib3==1.26.3
     # via
     #   okdata-sdk
     #   requests
