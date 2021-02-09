@@ -67,7 +67,7 @@ class TestActOnQueue:
         )
 
         Status.done.assert_called_once()
-        assert result["statusCode"] == 200
+        assert result is True
 
     def test_send_event_with_aborted_status(self, mocker):
         mocker.patch.object(Status, "done", return_value={})
@@ -92,7 +92,7 @@ class TestActOnQueue:
         )
 
         Status.done.assert_called_once()
-        assert result["statusCode"] == 200
+        assert result is True
 
     def test_send_event_with_unknown_trace_id(self, requests_mock):
         matcher = re.compile("status-api")
