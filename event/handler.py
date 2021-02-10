@@ -1,7 +1,10 @@
 import json
 
-from okdata.aws.logging import logging_wrapper
-from okdata.aws.status import status_wrapper, status_add, TraceStatus, TraceEventStatus
+from okdata.aws.logging import log_add, logging_wrapper
+from okdata.aws.status import TraceStatus, TraceEventStatus
+from okdata.aws.status.sdk import Status
+from okdata.aws.status.wrapper import _status_from_lambda_context
+from requests.exceptions import HTTPError
 
 
 finished_statuses = {
@@ -24,6 +27,7 @@ def act_on_queue(event, context):
     if not records:
         raise ValueError("Event does not contain Records")
 
+    # We always get 1 event, see Reliability section of https://aws.amazon.com/sns/faqs/
     record = records[0]
     source = record["EventSource"]
 
@@ -39,19 +43,23 @@ def act_on_queue(event, context):
     except KeyError:
         return False
 
+    trace_id = event["detail"].get("name")
+    log_add(trace_id=trace_id, event_status=event_status)
+
     # Ignore statuses where pipeline is not finished
     if event_status not in finished_statuses:
         return False
 
-    return set_finished_status(event, context)
+    return set_finished_status(event, context, trace_id, event_status)
 
 
-@status_wrapper
-def set_finished_status(event, context):
-    trace_id = event["detail"].get("name")
-    trace_event_status = finished_statuses[event["detail"]["status"]]
+def set_finished_status(event, context, trace_id, event_status):
+    status = Status(_status_from_lambda_context(event, context))
 
-    status_add(
+    trace_event_status = finished_statuses[event_status]
+    log_add(trace_event_status=trace_event_status)
+
+    status.add(
         trace_id=trace_id,
         domain="dataset",
         operation="set_finished_status",
@@ -59,6 +67,14 @@ def set_finished_status(event, context):
         trace_status=TraceStatus.FINISHED,
     )
 
-    headers = {}
-    body = {"message": "Acted on event"}
-    return {"statusCode": 200, "headers": headers, "body": json.dumps(body)}
+    try:
+        status.done()
+        log_add(status_api_ok=True)
+        return True
+    except HTTPError as e:
+        log_add(
+            status_api_ok=False,
+            status_api_response_code=e.response.status_code,
+            status_api_response_body=e.response.text,
+        )
+        return False
