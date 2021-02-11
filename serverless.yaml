@@ -7,6 +7,7 @@ provider:
   memorySize: 1024
   region: ${opt:region, 'eu-west-1'}
   stage: ${opt:stage, 'dev'}
+  timeout: 60
   deploymentBucket:
     name: ${self:custom.deploymentBucket.${self:provider.stage}, self:custom.deploymentBucket.dev}
     serverSideEncryption: AES256
