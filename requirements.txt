@@ -16,9 +16,9 @@ idna==2.10
     # via requests
 jsonschema==3.2.0
     # via okdata-sdk
-okdata-aws==0.3.2
+okdata-aws==0.3.3
     # via state-machine-event (setup.py)
-okdata-sdk==0.6.2
+okdata-sdk==0.8.1
     # via okdata-aws
 prettytable==2.0.0
     # via okdata-sdk
@@ -28,10 +28,8 @@ pyasn1==0.4.8
     #   rsa
 pydantic==1.7.3
     # via okdata-aws
-pyjwt==1.7.1
-    # via
-    #   okdata-sdk
-    #   state-machine-event (setup.py)
+pyjwt==2.1.0
+    # via okdata-sdk
 pyrsistent==0.17.3
     # via jsonschema
 python-jose==3.2.0
