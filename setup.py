@@ -15,7 +15,7 @@ setup(
     description="Receive events about state machines from CloudWatch and act on them",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.oslo.kommune.no/origo-dataplatform/state-machine-event",
+    url="https://github.com/oslokommune/okdata-state-machine-event",
     packages=find_packages(),
     install_requires=["okdata-aws>=0.3.3"],
 )
