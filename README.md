@@ -1,5 +1,40 @@
-State-machine-event
-==================
+# okdata-state-machine-event
+
 Act on a cloudwatch rule when a step-function is done.
 
-Will send a event to status-api with the appropriate status, based on the outcome of the step-function
+Will send an event to [status-api](https://github.com/oslokommune/dataplatform-status-api) with the appropriate status, based on the outcome of the step-function
+
+## Setup
+
+1. [Install Serverless Framework](https://serverless.com/framework/docs/getting-started/)
+2. Install plugins:
+
+```sh
+make init
+```
+
+### Setup for development
+
+```sh
+python3.7 -m venv .venv
+source ./venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Code formatting
+
+```sh
+make format
+```
+
+## Running tests
+
+```sh
+$ make test
+```
+
+Tests are run using [tox](https://pypi.org/project/tox/).
+
+## Deploy
+
+Deploy to dev is automatic via GitHub Actions, while deploy to prod can be triggered with GitHub Actions via dispatch. You can alternatively deploy from local machine (requires `saml2aws`) with: `make deploy` or `make deploy-prod`.
