@@ -17,5 +17,8 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/oslokommune/okdata-state-machine-event",
     packages=find_packages(),
-    install_requires=["okdata-aws>=0.3.3"],
+    install_requires=[
+        "okdata-aws>=0.3.3",
+        "okdata-sdk>=0.9.1",
+    ],
 )
